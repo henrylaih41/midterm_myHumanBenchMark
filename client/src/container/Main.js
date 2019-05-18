@@ -100,7 +100,7 @@ class MainPage extends React.Component {
                             <p>Remember the longest number you can</p>
                             {/*Number memory rankings */
                             this.state.numMemory_myScore && <div>
-                                <p>Best: {this.state.numMemory_myScore.numMemory_Best} Average: {Math.round(this.state.numMemory_myScore.numMemory_Avg)}</p>
+                                <p>Best: {this.state.numMemory_myScore.numMemory_Best} Average: {this.state.numMemory_myScore.numMemory_Avg.toFixed(2)}</p>
                             </div>}
                             {this.state.numMemory_rank && <RankTable challenge="numMemory" rankList = {this.state.numMemory_rank}/>}
                         </div>

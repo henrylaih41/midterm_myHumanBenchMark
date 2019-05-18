@@ -16,13 +16,14 @@ class NumberMemory extends React.Component {
     componentDidMount(){
       console.log("NumMemory Mounted")
     } 
-
+    // start when user clicked the screen
     start = (e) => {
         if(!this.state.start){
             this.setState({start: true})
         }
         this.clicked()
     }
+    // generate random number according to digitlengh
     genRandNumber(digitlength){
         var myNum = ""
         while(myNum.length < digitlength){
@@ -30,16 +31,16 @@ class NumberMemory extends React.Component {
         }
         return Number(myNum) 
     }
-
+    // if the user got the right answer, proceed to next level
     clicked = () => {
         this.setState({show: true, level: this.state.level + 1, numToMem: this.genRandNumber(this.state.level + 1), test: false})
         setTimeout(this.test, 2000);
     }
-
+    // show the input bar to the user to answer
     test = () => {
         this.setState({show: false, test: true})
     }
-    
+    // submit the answer
     submit = () => {
         if(this.refs.input.value == this.state.numToMem){
             this.clicked()
@@ -54,7 +55,7 @@ class NumberMemory extends React.Component {
             this.submit()
         }
     }
-
+    // save the record and reset the page
     retry = () => {
         this.props.socket.emit("save_numMem",this.props.acc,this.state.level,undefined)
         this.setState({
@@ -66,13 +67,17 @@ class NumberMemory extends React.Component {
           numToMem: undefined
         })
     }
+    // A callback function
+    // after the record is save, proceed back to the main page
     saved = () => {
         this.props.socket.emit("login",this.props.acc)
     }
+    // save the record to the database and proceed to main page
+    // this.save is a callback function
     done = () => {
         this.props.socket.emit("save_numMem",this.props.acc,this.state.level,this.saved)
     }
-
+    
     render() {
       return (
     <html>
